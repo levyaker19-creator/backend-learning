@@ -1,17 +1,17 @@
 
 const express = require("express");
 
-const app = express();
+const usersRoutes = require("./src/routes/users.routes");
 
+ 
+const app = express();
 
 app.use(express.json());
 const users = []
 
+app.use(usersRoutes);
 
 
-app.get("/users", (req,res)=>{
-    res.json(users);
-});
 app.get("/users/:id",(req,res) => {
 
     const id = Number(req.params.id)
@@ -24,25 +24,8 @@ app.get("/users/:id",(req,res) => {
     return res.json(user)
 
 });
-app.post("/users", (req,res) => {
-    const {name,age} = req.body;
-    if(!name ||  age === undefined){
-        return res.status(400).json({error:"Name and age are required"})
-    }else if(typeof name !== "string" || typeof age !== "number"){
-        return res.status(400).json({error:"Invalid name or age"})
-    } else if (age < 0 || age > 120){
-        return res.status(400).json({error:"Age must be between 0 and 120"})
-    }else if(name.trim() === ""){
-        return res.status(400).json({error:"Name cannot be empty"})
-    }
-    const  newUser= {
-        id: users.length + 1,
-        name: name.trim(),
-        age
-    };
-    users.push(newUser);
-    res.status(201).json(newUser);
-});   
+
+    
 
 app.put("/users/:id",(req,res) =>{
     const id = Number(req.params.id)
