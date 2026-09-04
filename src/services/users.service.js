@@ -17,8 +17,40 @@ function createUser(name, age){
       return newUser;
 
 }
+function getUserById(id){
+    const user = users.find((user)=>{
+        return user.id === id 
+    })
+    return user;
+}
+
+function updateUser(id, age){
+    const user = users.find((user)=>{
+        return user.id === id
+    })
+    if(!user){
+        return null;
+    }   
+    user.age = age;
+    return user ;
+}
+
+function deleteUser(id){
+    const index = users.findIndex((user)=>{
+        return user.id === id
+    })
+    if(index === -1){  
+        return null;    
+}   
+    users.splice(index,1)
+    return true;
+}   
+    
 
 module.exports = {
     getUsers,
-    createUser
+    createUser,
+    getUserById,
+    updateUser,
+    deleteUser
 }
